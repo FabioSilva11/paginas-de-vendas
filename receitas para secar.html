@@ -1,162 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Receitas para Secar em 30 Dias</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converter JSON String e Baixar</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
-    <!-- Cabeçalho -->
-    <header class="bg-green-600 text-white py-4">
-        <div class="container mx-auto flex justify-center items-center">
-            <h1 class="text-2xl font-bold text-center">Receitas para Secar em 30 Dias</h1>
-        </div>
-    </header>
+<body>
+    <h1>Converter Arquivo JSON String em JSON Estruturado</h1>
+    <input type="file" id="fileInput" accept=".json">
+    <button id="process">Converter e Baixar</button>
+    <h3>Resultado:</h3>
+    <pre id="output"></pre>
 
-    <!-- Conteúdo Principal -->
-    <main class="container mx-auto py-8">
-        <!-- Seção de Introdução -->
-        <section class="text-center mb-12">
-            <h2 class="text-3xl font-bold mb-4">Transforme seu Corpo em 30 Dias</h2>
-            <p class="text-lg">Descubra receitas deliciosas e saudáveis que vão te ajudar a perder peso de forma rápida e eficaz.</p>
-        </section>
+    <script>
+        document.getElementById('process').addEventListener('click', () => {
+            const fileInput = document.getElementById('fileInput');
+            const output = document.getElementById('output');
 
-        <!-- Seção do Livro de Receitas -->
-        <section class="bg-white p-6 rounded-lg shadow-lg mb-12">
-            <div class="flex flex-col md:flex-row items-center">
-                <img
-                    src="https://storage.googleapis.com/a1aa/image/ulEmbNuIANonDNVnRgMYA6HXv6kxYmpjggK1wf2b1jLdCj2JA.jpg"
-                    alt="Imagem de um livro de receitas com capa colorida"
-                    class="w-full md:w-1/2 h-64 object-cover rounded-lg"
-                />
-                <div class="md:ml-6 mt-6 md:mt-0">
-                    <h3 class="text-2xl font-bold">Livro de Receitas para Secar em 30 Dias</h3>
-                    <p class="mt-4">Nosso livro de receitas contém uma seleção de pratos deliciosos e saudáveis que vão te ajudar a alcançar seus objetivos de perda de peso em apenas 30 dias.</p>
-                    <ul class="list-disc list-inside mt-4">
-                        <li>Receitas fáceis de seguir</li>
-                        <li>Ingredientes acessíveis</li>
-                        <li>Planos de refeições semanais</li>
-                        <li>Dicas de nutrição e saúde</li>
-                    </ul>
-                    <div class="mt-6">
-                        <a href="https://pay.kirvano.com/7ca41729-0b73-4072-9f61-77e4500293b5" 
-                           target="_blank" 
-                           class="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700">
-                           Compre Agora
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
+            if (!fileInput.files.length) {
+                output.textContent = 'Por favor, selecione um arquivo JSON.';
+                return;
+            }
 
-        <!-- Cards de Receitas -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img
-                    src="https://storage.googleapis.com/a1aa/image/GbOIOkicE0ZqOxCPhwsCE20vpMD4a39hwVovqu4KoDsQhR7E.jpg"
-                    alt="Imagem de uma salada colorida com vegetais frescos"
-                    class="w-full h-40 object-cover rounded-t-lg"
-                />
-                <h3 class="text-xl font-bold mt-4">Salada Detox</h3>
-                <p class="mt-2">Uma salada refrescante e nutritiva para ajudar na desintoxicação do corpo.</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img
-                    src="https://storage.googleapis.com/a1aa/image/HvOUOHQWQqItBt6ssre2et46hLPvsjBagDBtVlbfJPn7JManA.jpg"
-                    alt="Imagem de um smoothie verde em um copo de vidro"
-                    class="w-full h-40 object-cover rounded-t-lg"
-                />
-                <h3 class="text-xl font-bold mt-4">Smoothie Verde</h3>
-                <p class="mt-2">Um smoothie cheio de nutrientes para começar o dia com energia.</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <img
-                    src="https://storage.googleapis.com/a1aa/image/DWmoCZxW9ka0CJK7k6qW84dREAowaycHZPbgv9l8p0qPhR7E.jpg"
-                    alt="Imagem de um prato de frango grelhado com legumes"
-                    class="w-full h-40 object-cover rounded-t-lg"
-                />
-                <h3 class="text-xl font-bold mt-4">Frango Grelhado com Legumes</h3>
-                <p class="mt-2">Uma refeição balanceada e rica em proteínas para o almoço ou jantar.</p>
-            </div>
-        </section>
+            const file = fileInput.files[0];
+            const reader = new FileReader();
 
-        <!-- Seção de Benefícios do Programa -->
-        <section class="bg-white p-8 rounded-lg shadow-lg mb-12">
-            <h3 class="text-2xl font-bold text-center mb-6">Benefícios Exclusivos</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="flex flex-col items-center">
-                    <i class="fas fa-leaf text-green-600 text-5xl mb-4"></i>
-                    <h4 class="font-bold text-xl">Saúde e Bem-estar</h4>
-                    <p class="text-center mt-2">Nossas receitas promovem uma alimentação balanceada, ajudando você a atingir seus objetivos sem abrir mão do sabor.</p>
-                </div>
-                <div class="flex flex-col items-center">
-                    <i class="fas fa-clock text-green-600 text-5xl mb-4"></i>
-                    <h4 class="font-bold text-xl">Praticidade</h4>
-                    <p class="text-center mt-2">Receitas fáceis e rápidas de preparar, ideais para quem tem uma rotina agitada e quer se alimentar bem.</p>
-                </div>
-                <div class="flex flex-col items-center">
-                    <i class="fas fa-chart-line text-green-600 text-5xl mb-4"></i>
-                    <h4 class="font-bold text-xl">Resultados Visíveis</h4>
-                    <p class="text-center mt-2">Com um plano estruturado, você verá resultados em pouco tempo e de maneira saudável.</p>
-                </div>
-            </div>
-        </section>
+            reader.onload = () => {
+                try {
+                    // Carrega o conteúdo do arquivo como string
+                    const jsonString = reader.result;
 
-        <!-- Depoimentos de Clientes -->
-        <section class="bg-white p-8 rounded-lg shadow-lg mb-12">
-            <h3 class="text-2xl font-bold text-center mb-6">Depoimentos de Clientes</h3>
-            <div class="space-y-8">
-                <div class="flex flex-col items-center">
-                    <p class="italic text-center">"Em apenas 3 semanas já comecei a notar uma grande diferença no meu corpo. Recomendo a todos!"</p>
-                    <p class="font-bold mt-2">- Maria Silva</p>
-                </div>
-                <div class="flex flex-col items-center">
-                    <p class="italic text-center">"As receitas são deliciosas e fáceis de seguir. Minha energia e disposição melhoraram muito!"</p>
-                    <p class="font-bold mt-2">- João Costa</p>
-                </div>
-            </div>
-        </section>
+                    // Converte a string para JSON utilizável
+                    const jsonArray = JSON.parse(jsonString);
 
-        <!-- FAQ - Perguntas Frequentes -->
-        <section class="bg-white p-8 rounded-lg shadow-lg mb-12">
-            <h3 class="text-2xl font-bold text-center mb-6">Perguntas Frequentes</h3>
-            <div class="space-y-6">
-                <div>
-                    <h4 class="font-bold">Esse programa é adequado para todos?</h4>
-                    <p>Sim! As receitas são desenvolvidas para serem saudáveis e atenderem a uma variedade de necessidades alimentares.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold">Preciso de ingredientes caros?</h4>
-                    <p>Não, nossas receitas utilizam ingredientes acessíveis que podem ser encontrados facilmente em qualquer supermercado.</p>
-                </div>
-            </div>
-        </section>
+                    // Converte o array para o formato esperado
+                    const convertedData = { Data: {} };
 
-        <!-- Convite para Compra -->
-        <section class="bg-green-600 text-white p-8 rounded-lg text-center">
-            <h3 class="text-2xl font-bold mb-4">Pronto para Transformar sua Vida?</h3>
-            <p class="mb-6">Adquira agora nosso plano completo e comece hoje mesmo a sua jornada para um corpo mais saudável e em forma.</p>
-            <a href="https://pay.kirvano.com/7ca41729-0b73-4072-9f61-77e4500293b5" 
-               target="_blank" 
-               class="bg-white text-green-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-100">
-               Compre Agora
-            </a>
-        </section>
-    </main>
+                    jsonArray.forEach((item, index) => {
+                        const key = (index + 1).toString().padStart(2, '0'); // Gera chaves como "01", "02", etc.
+                        convertedData.Data[key] = item;
+                    });
 
-    <!-- Rodapé -->
-    <footer class="bg-gray-800 text-white py-4">
-        <div class="container mx-auto text-center">
-            <p>&copy; 2024 Receitas para Secar em 30 Dias. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+                    // Mostra o resultado no console e na página
+                    output.textContent = JSON.stringify(convertedData, null, 2);
+
+                    // Permite baixar o resultado
+                    const blob = new Blob([JSON.stringify(convertedData, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'converted_listmap.json';
+                    a.textContent = 'Clique aqui para baixar o JSON convertido';
+                    document.body.appendChild(a);
+                } catch (e) {
+                    output.textContent = 'Erro ao processar o arquivo. Certifique-se de que é um JSON válido.';
+                    console.error(e);
+                }
+            };
+
+            reader.readAsText(file);
+        });
+    </script>
 </body>
 </html>
