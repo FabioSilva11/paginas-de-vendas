@@ -1,39 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Páginas de Vendas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        .link {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .link:hover {
-            background-color: #0056b3;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtrar e Baixar JSON</title>
 </head>
 <body>
-    <h1>Páginas de Vendas</h1>
-    <a href="receitas para secar.html" class="link">receitas para secar</a>
-    <a href="" class="link">Página de Venda 2</a>
-    <a href="" class="link">Página de Venda 3</a>
-    <a href="" class="link">Página de Venda 4</a>
+  <h1>Filtrar JSON e Baixar</h1>
+  <p>Selecione um arquivo JSON:</p>
+  <input type="file" id="jsonFile" accept=".json">
+  <button id="downloadButton" style="display: none;">Baixar JSON Filtrado</button>
+  <pre id="resultado"></pre>
+
+  <script>
+    const fileInput = document.getElementById('jsonFile');
+    const downloadButton = document.getElementById('downloadButton');
+    const resultado = document.getElementById('resultado');
+    let filteredData = null; // Para armazenar o JSON filtrado
+
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          // Parse o conteúdo do arquivo
+          const jsonData = JSON.parse(e.target.result);
+
+          if (!jsonData.Data) {
+            throw new Error("O JSON deve conter a chave 'Data'.");
+          }
+
+          // Filtrar o JSON
+          filteredData = Object.entries(jsonData.Data)
+            .filter(([key, value]) => /^[0-9]+$/.test(value.game_code)) // Manter apenas game_code numérico
+            .reduce((acc, [key, value]) => {
+              acc[key] = value;
+              return acc;
+            }, {});
+
+          // Atualizar o JSON original
+          jsonData.Data = filteredData;
+
+          // Exibir o JSON filtrado na página
+          resultado.textContent = JSON.stringify(jsonData, null, 2);
+
+          // Tornar o botão de download visível
+          downloadButton.style.display = 'block';
+
+          // Preparar o botão de download
+          prepareDownload(jsonData);
+        } catch (error) {
+          alert('Erro ao processar o JSON: ' + error.message);
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    function prepareDownload(data) {
+      downloadButton.addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'filtered_data.json';
+        a.click();
+        URL.revokeObjectURL(url); // Liberar memória após o download
+      });
+    }
+  </script>
 </body>
 </html>
